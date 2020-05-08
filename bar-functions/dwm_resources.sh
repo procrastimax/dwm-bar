@@ -5,21 +5,21 @@
 # GNU GPLv3
 
 dwm_resources () {
-    # Used and total memory
-    MEMUSED=$(free -h | awk '(NR == 2) {print $3}')
-    MEMTOT=$(free -h |awk '(NR == 2) {print $2}')
-    # CPU temperature
-    CPU=$(sysctl -n hw.sensors.cpu0.temp0 | cut -d. -f1)
-    # Used and total storage in /home (rounded to 1024B)
-    STOUSED=$(df -h | grep '/home$' | awk '{print $3}')
-    STOTOT=$(df -h | grep '/home$' | awk '{print $2}')
-    STOPER=$(df -h | grep '/home$' | awk '{print $5}')
+    MEMUSED=$(free | awk '(NR == 2) {print $3}')
+    MEMTOT=$(free | awk '(NR == 2) {print $2}')
+    MEMPERC=$(( $((MEMUSED*100)) / MEMTOT))%
+
+    CPUTEMP=$(cat /sys/class/thermal/thermal_zone0/temp)
+    CPUTEMP=$(($CPUTEMP / 1000 ))
+    CPUPERCENT=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}')
+
+    STOPER=$(df -h | grep '/$' | awk '{print $5}')
 
     printf "%s" "$SEP1"
     if [ "$IDENTIFIER" = "unicode" ]; then
-        printf "💻 MEM %s/%s CPU %s STO %s/%s: %s" "$MEMUSED" "$MEMTOT" "$CPU" "$STOUSED" "$STOTOT" "$STOPER"
+        printf "💻 RAM: %s /: %s CPU: %.f%% %s°C" "$MEMPERC" "$STOPER" "$CPUPERCENT"  "$CPUTEMP"
     else
-        printf "STA | MEM %s/%s CPU %s STO %s/%s: %s" "$MEMUSED" "$MEMTOT" "$CPU" "$STOUSED" "$STOTOT" "$STOPER"
+        printf "RAM: %s /: %s CPU: %.f%% %s°C" "$MEMPERC" "$STOPER" "$CPUPERCENT"  "$CPUTEMP"
     fi
     printf "%s\n" "$SEP2"
 }

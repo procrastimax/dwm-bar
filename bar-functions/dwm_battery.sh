@@ -6,18 +6,19 @@
 
 dwm_battery () {
     # Change BAT1 to whatever your battery is identified as. Typically BAT0 or BAT1
-    CHARGE=$(cat /sys/class/power_supply/BAT1/capacity)
-    STATUS=$(cat /sys/class/power_supply/BAT1/status)
+    CHARGE=$(cat /sys/class/power_supply/BAT0/capacity)
+    STATUS=$(cat /sys/class/power_supply/BAT0/status)
+    TIMELEFT=$(acpi | awk '{split($0,a,", "); print a[3]}' | awk '{split($0,b); print b[1]}' | head -c 5)
 
     printf "%s" "$SEP1"
     if [ "$IDENTIFIER" = "unicode" ]; then
         if [ "$STATUS" = "Charging" ]; then
-            printf "🔌 %s%% %s" "$CHARGE" "$STATUS"
+            printf "🔌 %s%% %s" "$CHARGE" "$TIMELEFT"
         else
-            printf "🔋 %s%% %s" "$CHARGE" "$STATUS"
+            printf "🔋 %s%% %s" "$CHARGE" "$TIMELEFT"
         fi
     else
-        printf "BAT %s%% %s" "$CHARGE" "$STATUS"
+        printf "BAT %s%% %s" "$CHARGE" "$TIMELEFT"
     fi
     printf "%s\n" "$SEP2"
 }

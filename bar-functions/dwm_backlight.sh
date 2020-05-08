@@ -7,7 +7,11 @@
 # Dependencies: xbacklight
 
 dwm_backlight () {
-    printf "%s☀ %.0f%s\n" "$SEP1" "$(xbacklight)" "$SEP2"
+    MAXBACKLIGHT=$(cat /sys/class/backlight/acpi_video0/max_brightness)
+    CURRBACKLIGHT=$(cat /sys/class/backlight/acpi_video0/actual_brightness)
+    printf "%s" "$SEP1"
+    printf "☀ %s/%s" "$CURRBACKLIGHT" "$MAXBACKLIGHT"
+    printf "%s\n" "$SEP2"
 }
 
 dwm_backlight

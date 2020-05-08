@@ -10,9 +10,8 @@
 
 dwm_spotify () {
     if ps -C spotify > /dev/null; then
-        ARTIST=$(playerctl -p spotify metadata artist)
-        TRACK=$(playerctl -p spotify metadata title)
-        DURATION=$(playerctl -p spotify metadata mpris:length | sed 's/.\{6\}$//')
+        ARTIST=$(playerctl -p spotify metadata artist | head -c 15)
+        TRACK=$(playerctl -p spotify metadata title | head -c 15)
         STATUS=$(playerctl -p spotify status)
 
         if [ "$IDENTIFIER" = "unicode" ]; then
@@ -28,9 +27,8 @@ dwm_spotify () {
                 STATUS="PAU"
             fi
         fi
-        
-        printf "%s%s %s - %s " "$SEP1" "$STATUS" "$ARTIST" "$TRACK"
-        printf "%0d:%02d" $((DURATION%3600/60)) $((DURATION%60))
+
+        printf "%s%s %s-%s " "$SEP1" "$STATUS" "$ARTIST" "$TRACK"
         printf "%s\n" "$SEP2"
     fi
 }

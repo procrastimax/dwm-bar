@@ -18,8 +18,8 @@ DIR=$(dirname "$LOC")
 export IDENTIFIER="unicode"
 
 # Change the charachter(s) used to seperate modules. If two are used, they will be placed at the start and end.
-export SEP1="["
-export SEP2="]"
+export SEP1=""
+export SEP2=""
 
 # Import the modules
 . "$DIR/bar-functions/dwm_countdown.sh"
@@ -45,6 +45,6 @@ export SEP2="]"
 # Update dwm status bar every second
 while true
 do
-    xsetroot -name "$(dwm_connman)$(dwm_countdown)$(dwm_alarm.sh)$(dwm_transmission)$(dwm_cmus)$(dwm_mpc)$(dwm_spotify)$(dwm_resources)$(dwm_battery)$(dwm_mail)$(dwm_backlight)$(dwm_alsa)$(dwm_pulse)$(dwm_weather)$(dwm_vpn)$(dwm_networkmanager)$(dwm_keyboard)$(dwm_ccurse)$(dwm_date)"
+    xsetroot -name "$(dwm_spotify) | $(dwm_connman) | $(dwm_resources) | $(dwm_battery) | $(dwm_backlight) | $(dwm_alsa) | $(dwm_date)"
     sleep 1
 done
