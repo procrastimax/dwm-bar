@@ -28,7 +28,7 @@ dwm_spotify () {
             fi
         fi
 
-        printf "%s%s %s-%s " "$SEP1" "$STATUS" "$ARTIST" "$TRACK"
+        printf "%s%s %s-%s | " "$SEP1" "$STATUS" "$ARTIST" "$TRACK"
         printf "%s\n" "$SEP2"
     fi
 }
