@@ -17,7 +17,7 @@ dwm_connman () {
     # get the connmanctl service name
     # this is a UID starting with 'vpn_', 'wifi_', or 'ethernet_', we dont care for the vpn one
     # if the servicename string is empty, there is no online connection
-    SERVICENAME=$(connmanctl services | grep -E "^\*AO|^\*O" | grep -Eo 'wifi_.*|ethernet_.*')
+    SERVICENAME=$(connmanctl services | grep -E "^\*AO|^\* O" | grep -Eo 'wifi_.*|ethernet_.*')
 
     if [ ! "$SERVICENAME" ]; then
         printf "OFFLINE"
